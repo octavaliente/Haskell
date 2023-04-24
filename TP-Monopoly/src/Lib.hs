@@ -37,10 +37,32 @@ agregarAccionGritar unaPersona = unaPersona {acciones = acciones unaPersona ++[g
 gritar :: Accion
 gritar unaPersona = unaPersona {nombre = nombre unaPersona ++ "AHHHH"}
 
-subastar :: Accion
-subastar unaPersona
-  | tactica unaPersona == "Oferente Singular" && tactica unaPersona == "Accionista" = agregarPropiedad unaPersona propiedad
-  | otherwise = unaPersona
+--subastar :: Accion
+--subastar unaPersona
+--  | tactica unaPersona == "Oferente Singular" && tactica unaPersona == "Accionista" = agregarPropiedad unaPersona propiedad
+--  | otherwise = unaPersona
 
 agregarPropiedad :: Persona -> Propiedad -> Persona
-agregarPropiedad unaPersona propiedad = unaPersona {propiedades = propiedades unaPersona ++[propiedad], dinero=dinero unaPersona -snd propiedad}
+agregarPropiedad unaPersona propiedad = unaPersona {propiedades = propiedades unaPersona ++[propiedad], dinero=dinero unaPersona - obtenerPrecioPropiedad propiedad}
+
+cobrarAlquileres :: Accion
+cobrarAlquileres unaPersona = unaPersona {dinero = dinero unaPersona + totalAlquileres unaPersona}
+
+totalAlquileres :: Persona -> Int
+totalAlquileres unaPersona = (sum.map obtenerPrecioPropiedad) $ propiedades unaPersona
+
+obtenerPrecioPropiedad :: Propiedad -> Int
+obtenerPrecioPropiedad (_,unPrecio) = montoASumar unPrecio
+
+montoASumar :: Int -> Int
+montoASumar unValor
+  | esPropiedadCara unValor = 20
+  | otherwise = 10
+
+esPropiedadCara :: Int -> Bool
+esPropiedadCara unValor = unValor >=150
+
+pagarAAccionistas :: Accion
+pagarAAccionistas unaPersona
+  | tactica unaPersona == "Accionista" = modificarDinero 200 unaPersona
+  | otherwise = modificarDinero (-100) unaPersona
