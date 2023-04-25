@@ -37,10 +37,10 @@ agregarAccionGritar unaPersona = unaPersona {acciones = acciones unaPersona ++[g
 gritar :: Accion
 gritar unaPersona = unaPersona {nombre = nombre unaPersona ++ "AHHHH"}
 
---subastar :: Accion
---subastar unaPersona
---  | tactica unaPersona == "Oferente Singular" && tactica unaPersona == "Accionista" = agregarPropiedad unaPersona propiedad
---  | otherwise = unaPersona
+subastar :: Accion
+subastar unaPersona
+  | tactica unaPersona == "Oferente Singular" && tactica unaPersona == "Accionista" = agregarPropiedad unaPersona propiedad
+  | otherwise = unaPersona
 
 agregarPropiedad :: Persona -> Propiedad -> Persona
 agregarPropiedad unaPersona propiedad = unaPersona {propiedades = propiedades unaPersona ++[propiedad], dinero=dinero unaPersona - obtenerPrecioPropiedad propiedad}
