@@ -37,9 +37,9 @@ agregarAccionGritar unaPersona = unaPersona {acciones = acciones unaPersona ++[g
 gritar :: Accion
 gritar unaPersona = unaPersona {nombre = nombre unaPersona ++ "AHHHH"}
 
-subastar :: Accion
-subastar unaPersona
-  | tactica unaPersona == "Oferente Singular" && tactica unaPersona == "Accionista" = agregarPropiedad unaPersona propiedad
+subastar :: Persona -> Propiedad -> Persona
+subastar unaPersona unaPropiedad
+  | tactica unaPersona == "Oferente Singular" && tactica unaPersona == "Accionista" = agregarPropiedad unaPersona unaPropiedad
   | otherwise = unaPersona
 
 agregarPropiedad :: Persona -> Propiedad -> Persona
