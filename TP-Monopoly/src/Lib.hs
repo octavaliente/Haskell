@@ -39,11 +39,11 @@ gritar unaPersona = unaPersona {nombre = nombre unaPersona ++ "AHHHH"}
 
 subastar :: Persona -> Propiedad -> Persona
 subastar unaPersona unaPropiedad
-  | tactica unaPersona == "Oferente Singular" && tactica unaPersona == "Accionista" = agregarPropiedad unaPersona unaPropiedad
+  | tactica unaPersona == "Oferente Singular" || tactica unaPersona == "Accionista" = agregarPropiedad unaPersona unaPropiedad
   | otherwise = unaPersona
 
 agregarPropiedad :: Persona -> Propiedad -> Persona
-agregarPropiedad unaPersona propiedad = unaPersona {propiedades = propiedades unaPersona ++[propiedad], dinero=dinero unaPersona - obtenerPrecioPropiedad propiedad}
+agregarPropiedad unaPersona propiedad = unaPersona {propiedades = propiedades unaPersona ++[propiedad], dinero= dinero unaPersona - snd propiedad}
 
 cobrarAlquileres :: Accion
 cobrarAlquileres unaPersona = unaPersona {dinero = dinero unaPersona + totalAlquileres unaPersona}
