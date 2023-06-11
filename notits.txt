@@ -3,6 +3,13 @@ zip
 zipWith
 dropWhile
 takeWhile
+tail -> devuelve la cola
+head -> cabeza
+last -> ultimo
+null -> comprueba si la lista esta vacia
+drop x -> quita x elementos
+``
+ 
 
 between :: (Eq a, Enum a) => a -> a -> a -> Bool
 between n m x = elem x [n .. m]
