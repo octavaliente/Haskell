@@ -1,0 +1,55 @@
+-- Funciones útiles
+zip 
+zipWith
+dropWhile
+takeWhile
+
+between :: (Eq a, Enum a) => a -> a -> a -> Bool
+between n m x = elem x [n .. m]
+
+*Para el maximo de una lista
+maximoSegun :: (Foldable t, Ord a1) => (a2 -> a1) -> t a2 -> a2
+maximoSegun f lista = foldl1 (mayorSegun f) lista
+
+mayorSegun :: Ord a => (t -> a) -> t -> t -> t
+mayorSegun f a b
+  | f a > f b = a
+  | otherwise = b
+
+
+* Buscar si coincide con un nombre
+tienePulgares :: String -> Bool
+tienePulgares "Faffy" = False
+tienePulgares "Astro" = False
+tienePulgares _       = True
+
+*funciones tipo shortcuts
+mapNombre :: (String -> String) -> Barbaro -> Barbaro
+mapNombre f unBarbaro = unBarbaro { nombre = f . nombre $ unBarbaro }
+
+mapFuerza :: (Int -> Int) -> Barbaro -> Barbaro
+mapFuerza f unBarbaro = unBarbaro { fuerza = f . fuerza $ unBarbaro }
+
+mapHabilidades :: ([String] -> [String]) -> Barbaro -> Barbaro
+mapHabilidades f unBarbaro = unBarbaro { habilidades = f . habilidades $ unBarbaro }
+
+mapObjetos :: ([Objeto] -> [Objeto]) -> Barbaro -> Barbaro
+mapObjetos f unBarbaro = unBarbaro { objetos = f . objetos $ unBarbaro }
+
+setObjetos :: [Objeto] -> Barbaro -> Barbaro
+setObjetos unosObjetos unBarbaro = mapObjetos (const unosObjetos) unBarbaro
+
+-la forma dentro de los corchetes se tiene que usar eso.
+observar que siempre es una funcion (tipo -> tipo) segun que campo modificamos.
+para poder utilizarla es ideal usar aplicacion parcial (ver tierra de barbaros)
+en una suma : mapNombre . (+) . (nombre * 5)
+siempre termina siendo una funcion la cual por aplicacion parcial solo va a recibir un parametro. 
+la funcion set cambia directamente el valor.
+
+--Listas infinitas
+ver de dividir el problema en partes y realizar una concatenacion.
+ejs:
+map (("extra numero " ++).show) [1..]
+listaNFS = map (\unNumero -> "jugar need for speed " ++ show unNumero) [1..]
+descendientes unBarbaro = 
+    map (\unNumero -> (aplicarObjetos unBarbaro) {nombre = nombre unBarbaro ++ replicate unNumero '*', habilidades = sinRepetidos (habilidades unBarbaro)}) [1..] 
