@@ -23,6 +23,9 @@ tienePulgares "Faffy" = False
 tienePulgares "Astro" = False
 tienePulgares _       = True
 
+-evitar repeticion de logica. Se da principalmente cuando nos dicen de modificar un dato dentro de un valor de la estructura de datos.
+(clase 8) https://pdep-lunes.github.io/bitacora/2023/funcional/clase-08/
+
 *funciones tipo shortcuts
 mapNombre :: (String -> String) -> Barbaro -> Barbaro
 mapNombre f unBarbaro = unBarbaro { nombre = f . nombre $ unBarbaro }
@@ -46,10 +49,38 @@ en una suma : mapNombre . (+) . (nombre * 5)
 siempre termina siendo una funcion la cual por aplicacion parcial solo va a recibir un parametro. 
 la funcion set cambia directamente el valor.
 
+-lazy evaluation (Clase 7) https://pdep-lunes.github.io/bitacora/2023/funcional/clase-07/
+Ahi especifica que funciones rompen y cuales no.
+Para justificar, buscar si el codigo romperia o no, evitar usar por consola porque puede ser un resultado erroneo.
+
 --Listas infinitas
+Funciones de listas infinitas en guia de lenguajes
 ver de dividir el problema en partes y realizar una concatenacion.
 ejs:
 map (("extra numero " ++).show) [1..]
 listaNFS = map (\unNumero -> "jugar need for speed " ++ show unNumero) [1..]
 descendientes unBarbaro = 
     map (\unNumero -> (aplicarObjetos unBarbaro) {nombre = nombre unBarbaro ++ replicate unNumero '*', habilidades = sinRepetidos (habilidades unBarbaro)}) [1..] 
+
+-RECURSIVIDAD: 
+* caso base: corta la recursividad.
+* caso recursivo: donde se vuelve a llamr a la funcion.
+
+-FOLD
+foldr: operador acumulador lista (Derecha a izquierda)
+foldl: oeprador acumulador lista (Izquierda a derecha)
+foldl1: operador lista (Aplana la lista operandola, es cuando no tenemos un acumulador)
+foldr1: operador lista
+foldr1 o foldl1 no funcionan en una lista vacia o cuando la lista se vacia.
+foldl no sirve para listas infinitas, en esos casos se utiliza foldr (operacion lazy a la derecha)
+
+-Precedencia de operadores https://pdep-lunes.github.io/bitacora/2023/funcional/clase-02/ clase2
+-Type Classes Num Eq Show, graficado en clase 2 (IMPORTANTE)
+
+(clase 6) https://pdep-lunes.github.io/bitacora/2023/funcional/clase-06/
+-Currificacion: "Haskell hace esto sin que nos demos cuenta: lo que hace haskell es "partir" nuestra función en diferentes funciones de 1 parámetro, es decir, currifica nuestras funciones."
+Expresiones lambda que hace haskell sobre nuestras funciones automaticamente. 
+En el parcial no es necesario usar expresiones lambda, las condiciones de uso son:
+* Cuando no tenemos un buen nombre para ponerle a una función.
+* Si sólo la vamos a usar una única vez, sino estamos repitiendo lógica.
+* Si no necesitamos usar guardas ni pattern matching (con más de una ecuación).
